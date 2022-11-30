@@ -15,13 +15,12 @@ function Form({ formType }) {
 
   const handleSignIn = () => {
     console.log('Sing In');
+    navigate('/main');
   };
 
   const handleSingUp = () => {
     console.log('sign up');
   };
-
-  console.log('to aqui', formType);
 
   return (
     <div>
