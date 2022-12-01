@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 
 export function Transactions() {
+  const [transaction, setTransaction] = useState({
+    cpf: '',
+    price: '',
+  });
   const [transactionType, setTransactionType] = useState('transferencia');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setLogin((prevState) => ({
+    setTransaction((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
   const transfer = () => {
-    console.log('transfer');
+    console.log('transfer', transaction);
+    setTransaction({
+      cpf: '',
+      price: '',
+    });
   };
 
   const deposit = () => {
-    console.log('deposit');
+    setTransaction({ cpf: '' });
+    console.log('deposit', transaction);
+    setTransaction({ price: '' });
   };
 
   const changeTransaction = (value) => {
@@ -45,6 +55,7 @@ export function Transactions() {
             id="cpf"
             name="cpf"
             type="text"
+            value={transaction.cpf}
             placeholder="Informe o cpf"
             onChange={handleChange}
           />
@@ -53,6 +64,7 @@ export function Transactions() {
           id="price"
           name="price"
           type="text"
+          value={transaction.price}
           placeholder="Informe o valor"
           onChange={handleChange}
         />

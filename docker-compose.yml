@@ -1,0 +1,83 @@
+version: '3.9'
+services:
+  frontend:
+    image: node:16.18
+    container_name: bd_digital_app_frontend
+    build: ./frontend
+    ports:
+      - 5173:5173
+    environment:
+      - WATCHPACK_POLLING=true
+    working_dir: /app/frontend
+    volumes:
+      - ./frontend:/app/frontend
+    tty: true
+    stdin_open: true
+    command: bash -c "npm install -g npm@9.1.2 && npm run dev"
+    restart: always
+    networks:
+      - projeto-voluntrybe
+    depends_on:
+      - backend
+  backend:
+    image: node:16.18
+    container_name: bd_digital_app_backend
+    build: ./backend
+    # user: node
+    working_dir: /app/backend
+    volumes:
+      - ./backend:/app/backend
+    tty: true
+    stdin_open: true
+    command: bash -c "npm install -g npm@9.1.3 && chown -R root /app/backend && npm start"
+    restart: always
+    ports:
+      - 4001:4001
+    environment:
+      - APP_PORT=4001
+      - JWT_SECRET=jwt_secret
+      # Os dados abaixo se referem ao container `db`
+      # Dica: Relembre aqui da comunicação interna entre containers
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db
+      - MYSQL_PORT=4306
+    networks:
+      - projeto-voluntrybe
+      - rede
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: mysql:8.0.21
+    platform: linux/x86_64
+    restart: always
+    expose:
+      - '4306'
+    ports:
+      - 4306:3306
+      - 43060:33060
+    env_file:
+      - .env
+    networks:
+      - rede
+    cap_add:
+      - SYS_NICE
+networks:
+  rede:
+    driver: bridge
+    name: rede
+
+  projeto-voluntrybe:
+    driver: bridge
+    name: projeto-voluntrybe
+
+# As chaves `tty`, `stdin_open` e `command` fazem com que o container fique
+# rodando em segundo plano, bem como tornam possível o uso do comando
+# `docker attach`, já deixando o terminal atual acoplado ao container, direto
+# no bash. Apesar disso, utilizar o attach mais de uma vez irá replicar o
+# terminal, portanto é melhor utilizar o comando `docker exec`.
+
+# A renomeação da rede padrão é feita pois caso contrário o nome da rede será
+# o nome do diretório onde o arquivo atual se encontra, o que pode dificultar
+# a listagem individual.
