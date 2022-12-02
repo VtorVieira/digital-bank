@@ -8,14 +8,18 @@ const { API_PORT } = process.env;
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/', routers.userRouter);
+app.use('/account', routers.accountRouter);
+app.use('/token', routers.tokenRouter);
+app.use('/transactions', routers.transactionRouter);
 
 app.use((err, _req, res, _next) => {
-  const { status, message } = err;
-  console.log('erroooooooooooooooor', message);
-  return res.status(status).json({ message });
+  const { status, code } = err;
+  console.log('errooooooooooor', err.message);
+  return res.status(status).json({ code });
 });
 
 app.listen(API_PORT, () => console.log(`Iniciando na porta ${API_PORT}`));

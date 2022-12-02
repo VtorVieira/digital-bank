@@ -3,20 +3,16 @@ module.exports = {
     await queryInterface.createTable('accounts', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
       },
       balance: {
-        allowNull: true,
-        type: Sequelize.DECIMAL
-      },
-      createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DECIMAL,
       },
     }, {
-      tableName: 'accounts',
+      timestamps: false,
     });
   },
   async down(queryInterface, Sequelize) {

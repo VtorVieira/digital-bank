@@ -1,41 +1,68 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { postLogin, postRegister } from '../services/requests';
+
+import dgbank from '../images/dgbank.svg';
 
 function Form({ formType }) {
-  const [login, setLogin] = useState();
+  const [form, setForm] = useState({
+    name: '',
+    cpf: '',
+  });
+  const [requestFailed, setRequestFailed] = useState({ message: '' });
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setLogin((prevState) => ({
+    setForm((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleSignIn = () => {
-    console.log('Sing In');
-    navigate('/main');
+  const handleSignIn = async () => {
+    try {
+      const generateToken = await postLogin(form.name, form.cpf);
+      localStorage.setItem('token', JSON.stringify(generateToken));
+      navigate('/main', { replace: true });
+    } catch (error) {
+      console.log(error.response.data);
+      setRequestFailed({ message: error.response.data.code });
+    }
   };
 
-  const handleSingUp = () => {
-    console.log('sign up');
+  const handleSingUp = async () => {
+    try {
+      const userCreated = await postRegister(form.name, form.cpf);
+      alert(userCreated.message);
+      navigate('/', { replace: true });
+    } catch (error) {
+      setRequestFailed({ message: error.response.data.code });
+    }
   };
 
   return (
-    <div className='bg-gray-800 flex flex-col justify-center'>
-      <form className='max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg'>
-        <div className='flex justify-around text-white text-4x1 font-bold text-center'>
-          <div>
+    <div className='flex justify-center items-center h-screen bg-[#919191] font-bold text-lg'>
+      <form className=' bg-[#6b6b6b] rounded-lg border-spacing-0 border-solid border-2 h-3/4 w-96 md:h-2/3 md:w-1/4'>
+        <div className='flex justify-center items-center w-96 mt-6 md:w-full'>
+          <img
+            className='rounded-lg w-28'
+            src={dgbank}
+            alt="Logo" />
+        </div>
+        <div className='flex justify-around mt-8'>
+          <div className='border-r-4 border-b-4 w-3/6 text-center '>
             <button
+              className='text-[#ffff] hover:text-[#7CF6FD]'
               type='button'
               onClick={() => navigate('/signin', { replace: true })}
             >
               Login
             </button>
           </div>
-          <div>
+          <div className='border-b-4 w-3/6 text-center'>
             <button
+              className='text-[#ffff] hover:text-[#7CF6FD]'
               type='button'
               onClick={() => navigate('/signup', { replace: true })}
             >
@@ -43,33 +70,40 @@ function Form({ formType }) {
             </button>
           </div>
         </div>
-        <div className=' flex flex-col text-gray-400 py-2'>
-          <input className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            id="name"
-            name="name"
-            // value={login.name}
-            type="text"
-            placeholder={formType === 'Sing In' ? 'Informe o seu nome completo' : 'Cadastre o seu nome completo'}
-            onChange={handleChange}
-          />
+        <div className='flex flex-col gap-8 justify-center items-center mt-12'>
+          <div>
+            <input
+              className='rounded-md text-slate-800 placeholder-gray-500 w-80 h-10 p-3 shadow-lg focus:outline-none focus:ring focus:ring-blue-400'
+              id="name"
+              name="name"
+              value={form.name}
+              type="text"
+              placeholder={formType === 'Sing In' ? 'Informe o seu nome completo' : 'Cadastre o seu nome completo'}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <input
+              className='rounded-md text-slate-800 placeholder-gray-500 w-80 h-10 p-3 shadow-lg focus:outline-none focus:ring focus:ring-blue-400'
+              id="cpf"
+              name="cpf"
+              value={form.cpf}
+              type="text"
+              placeholder={formType === 'Sing In' ? 'Informe o seu CPF' : 'Cadastre o seu CPF'}
+              onChange={handleChange}
+            />
+          </div>
+          <div className='w-80 border-red-500 border-l-4'>
+            <p className=' text-[#ffff] ml-2'>{requestFailed.message}</p>
+          </div>
         </div>
-        <div className=' flex flex-col text-gray-400 py-2'>
-          <input className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            id="cpf"
-            name="cpf"
-            // value={login.cpf}
-            type="text"
-            placeholder={formType === 'Sing In' ? 'Informe o seu CPF' : 'Cadastre o seu CPF'}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
+        <div className='flex justify-center items-center mt-8'>
           <button
-            className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg'
+            className='rounded-xl w-80 h-8 bg-[#5e17eb] text-[#fff]'
             type='button'
             onClick={formType === 'Sing In' ? handleSignIn : handleSingUp}
           >
-            {formType === 'Sing In' ? 'Sing In' : 'Sing Up'}
+            {formType === 'Sing In' ? 'Entrar' : 'Cadastrar'}
           </button>
         </div>
       </form>

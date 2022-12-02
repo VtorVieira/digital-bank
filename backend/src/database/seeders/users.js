@@ -3,7 +3,8 @@ module.exports = {
     await queryInterface.bulkInsert('users', [
       {
         name: 'teste',
-        cpf: '012.345.678-9',
+        cpf: '012.345.678-90',
+        accountId: 1,
       },
     ], {});
   },

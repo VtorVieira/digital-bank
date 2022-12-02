@@ -1,11 +1,13 @@
 const { Router } = require('express');
 
 const userControllers = require('../controllers/userController');
-const validations = require('../middleware/validate');
+const validate = require('../middleware/validate');
 
 const userRouter = Router();
 
-userRouter.post('/signin', userControllers.findByCPF);
-// userRouter.post('/singup', validations.validateLogin, userControllers.createUser);
+userRouter.post('/one', userControllers.findOne);
+userRouter.get('/all', userControllers.findAll);
+userRouter.post('/signin', validate.validateLogin, userControllers.findByCPF);
+userRouter.post('/signup', validate.validateLogin, userControllers.createUser);
 
 module.exports = userRouter;

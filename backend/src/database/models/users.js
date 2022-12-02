@@ -14,9 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    accountId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     tableName: 'users',
     timestamps: false,
   });
+
+  User.associate = (models) => {
+    User.belongsTo(models.Account, { foreignKey: 'accountId', as: 'accounts' });
+  };
+
   return User;
 };

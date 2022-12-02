@@ -2,10 +2,10 @@ version: '3.9'
 services:
   frontend:
     image: node:16.18
-    container_name: bd_digital_app_frontend
+    container_name: digital_bank_app_frontend
     build: ./frontend
     ports:
-      - 5173:5173
+      - 3000:3000
     environment:
       - WATCHPACK_POLLING=true
     working_dir: /app/frontend
@@ -13,15 +13,15 @@ services:
       - ./frontend:/app/frontend
     tty: true
     stdin_open: true
-    command: bash -c "npm install -g npm@9.1.2 && npm run dev"
+    command: bash -c "npm install -g npm@9.1.3 && npm run dev"
     restart: always
-    networks:
-      - projeto-voluntrybe
     depends_on:
       - backend
+    networks:
+      - virtual_wan_Front-to-Back
   backend:
     image: node:16.18
-    container_name: bd_digital_app_backend
+    container_name: digital_bank_app_backend
     build: ./backend
     # user: node
     working_dir: /app/backend
@@ -31,46 +31,37 @@ services:
     stdin_open: true
     command: bash -c "npm install -g npm@9.1.3 && chown -R root /app/backend && npm start"
     restart: always
+    depends_on:
+      - db
     ports:
       - 4001:4001
     environment:
-      - APP_PORT=4001
-      - JWT_SECRET=jwt_secret
-      # Os dados abaixo se referem ao container `db`
-      # Dica: Relembre aqui da comunicação interna entre containers
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
-      - MYSQL_HOST=db
-      - MYSQL_PORT=4306
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: digital_bank
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      API_PORT: 4001
     networks:
-      - projeto-voluntrybe
-      - rede
-    depends_on:
-      - db
-  db:
-    container_name: db
-    image: mysql:8.0.21
-    platform: linux/x86_64
+      - virtual_wan_Front-to-Back
+      - virtual_lan_Back-to-DB
+  postgres:
+    image: postgres:14.2-alpine
+    container_name: digital_bank_app_db
     restart: always
-    expose:
-      - '4306'
     ports:
-      - 4306:3306
-      - 43060:33060
-    env_file:
-      - .env
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     networks:
-      - rede
+      - virtual_lan_Back-to-DB
     cap_add:
       - SYS_NICE
 networks:
-  rede:
-    driver: bridge
-    name: rede
-
-  projeto-voluntrybe:
-    driver: bridge
-    name: projeto-voluntrybe
+  # The presence of these objects is sufficient to define them
+  virtual_wan_Front-to-Back: {}
+  virtual_lan_Back-to-DB: {}
 
 # As chaves `tty`, `stdin_open` e `command` fazem com que o container fique
 # rodando em segundo plano, bem como tornam possível o uso do comando

@@ -2,10 +2,10 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export function Footer() {
   return (
-    <footer>
+    <footer className='flex flex-col justify-center items-center border-solid border-2 bg-[#6b6b6b] mt-4 ml-4 mr-4 rounded-md text-[#ffff] font-bold md:absolute md:inset-x-1 md:bottom-0 xl:inset-x-16 2xl:inset-x-48'>
       <h3>Digital Bank</h3>
       <p>Created by <span>Vitor Vieira</span> &copy; 2022</p>
-      <div>
+      <div className='flex'>
         <label htmlFor="linkedIn">
           {' '}
           <abbr title="https://www.linkedin.com/in/vtorvieira/">
@@ -23,7 +23,7 @@ export function Footer() {
           </abbr>
         </label>
       </div>
-      <p>React, HTML, Tailwind, NodeJs, Sequelize, MySql</p>
+      <p>React, Tailwind, NodeJs, Postgres, Sequelize</p>
     </footer>
   );
 }
