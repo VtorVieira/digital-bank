@@ -18,7 +18,6 @@ app.use('/transactions', routers.transactionRouter);
 
 app.use((err, _req, res, _next) => {
   const { status, code } = err;
-  console.log('errooooooooooor', err.message);
   return res.status(status).json({ code });
 });
 

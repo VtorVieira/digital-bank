@@ -13,6 +13,12 @@ const accountService = {
     return allUser;
   },
 
+  findUser: async (cpf) => {
+    const user = await User.findOne({ where: { cpf }, raw: true });
+    if (!user) throw new CustomError(404, 'CPF não encontrado!');
+    return user;
+  },
+
   getBalanceUser: async (userId) => {
     const user = await User.findByPk(userId);
     const account = await Account.findOne({
@@ -27,24 +33,27 @@ const accountService = {
     const debitedUser = await User.findOne({ where: { cpf }, raw: true });
     const debitedAccountRec = await Account.findOne({ where: { id: debitedUser.id }, raw: true });
 
-    if (debitedAccountRec.balance < balance || balance <= 0) {
-      throw new CustomError(401, 'Saldo insuficiente, por gentileza, digite um outro valor!');
+    if (debitedAccountRec.balance < balance) {
+      throw new CustomError(400, 'Saldo insuficiente, por gentileza, digite um outro valor!');
+    }
+
+    if (balance <= 0) {
+      throw new CustomError(400, 'Não é possível realizar transferência com valor igual ou menor que R$ 0');
+    }
+
+    if (balance > 2000) {
+      throw new CustomError(400, 'Transferências tem um limite de até R$ 2000');
     }
     return debitedAccountRec;
   },
 
   sendDepositUser: async (cpf, balance) => {
-    console.log('passo 1');
     const convertBalance = balance.toString().replace(',', '.');
-    console.log('passo 2');
-    const creditedUser = await User.findOne({ where: { cpf }, raw: true });
-    console.log('passo 3');
+    const creditedUser = await accountService.findUser(cpf);
     const creditedAccountRec = await Account.findOne({ where: { id: creditedUser.accountId }, raw: true });
-    console.log('passo 4');
     const newBalanceCreditedUser = (Number(creditedAccountRec.balance) + Number(convertBalance));
-    console.log('passo 5');
     const result = await sequelize.transaction(async (t) => {
-      console.log('passo 6');
+
       const newTransaction = await Transaction.create(
         {
           debitedAccountId: creditedAccountRec.id,
@@ -54,29 +63,28 @@ const accountService = {
         },
         { transaction: t },
       );
-      console.log('passo 7');
+
       await Account.update(
         { balance: Number(newBalanceCreditedUser) }, { where: { id: creditedUser.accountId } }
       );
-      console.log('passo 8');
+
       return newTransaction;
     });
 
     return result;
   },
 
-  sendBalanceUser: async (cpfRequest, cpfReceiver, balance) => {
+  sendTransferUser: async (cpfRequest, cpfReceiver, balance) => {
     const convertBalance = balance.toString().replace(',', '.');
 
     if (cpfRequest === cpfReceiver) {
-      throw new CustomError(401, 'Você não pode transferir valor para você mesmo!');
+      throw new CustomError(400, 'Você não pode transferir valor para você mesmo!');
     }
 
     const debitedAccountRec = await accountService.checkBalanceUser(cpfRequest, Number(convertBalance));
 
-    const debitedUser = await User.findOne({ where: { cpf: cpfRequest }, raw: true });
-    const creditedUser = await User.findOne({ where: { cpf: cpfReceiver }, raw: true });
-    if (!creditedUser) throw new CustomError(401, 'CPF não encontrado!');
+    const debitedUser = await accountService.findUser(cpfRequest);
+    const creditedUser = await accountService.findUser(cpfReceiver);
 
     const creditedAccountRec = await Account.findOne({ where: { id: creditedUser.accountId }, raw: true });
 

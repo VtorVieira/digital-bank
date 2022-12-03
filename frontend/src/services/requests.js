@@ -44,7 +44,5 @@ export const postDeposit = async (creditedUser, value) => {
 
 export const getHistoryUser = async (cpf) => {
   const { data } = await api.post('/transactions', { cpf });
-
-  console.log('request', data);
   return data;
 };

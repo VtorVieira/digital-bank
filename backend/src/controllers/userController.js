@@ -2,7 +2,8 @@ const userService = require('../services/userService');
 
 const userControllers = {
   findOne: async (req, res) => {
-    const user = await userService.findOne(req.body.cpf);
+    const { cpf } = req.body;
+    const user = await userService.findOne(cpf);
     res.status(200).json(user);
   },
   findAll: async (_req, res) => {

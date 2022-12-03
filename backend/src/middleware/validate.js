@@ -18,17 +18,26 @@ const validations = {
     }
   },
 
-  validateLogin: (req, _res, next) => {
+  validateRegister: (req, _res, next) => {
     const { name, cpf } = req.body;
-    const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+
     if (!name || !cpf) {
       throw new CustomError(400, 'Todos os campos devem ser preenchidos');
     }
     if (name < 3) {
-      throw new CustomError(401, 'Nome deve ter pelo menos 3 caracteres');
+      throw new CustomError(400, 'Nome deve ter pelo menos 3 caracteres');
     }
-    if (!regex.test(cpf)) {
-      throw new CustomError(401, 'CPF inválido, favor forneça um CPF valido!');
+    if (cpf.length < 11 || cpf.length > 11) {
+      throw new CustomError(400, 'CPF inválido, favor forneça um CPF valido!');
+    }
+    next();
+  },
+
+  validateLogin: (req, _res, next) => {
+    const { cpf } = req.body;
+
+    if (cpf.length < 11 || cpf.length > 11) {
+      throw new CustomError(400, 'CPF inválido, favor forneça um CPF valido!');
     }
     next();
   },

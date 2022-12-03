@@ -1,12 +1,27 @@
-import React, { useState } from "react";
-import { postDeposit, postTransfer, verifyToken } from "../services/requests";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { checkUserToken } from "../helpers/checkUserToken";
+import { removeCPFCaracter } from "../helpers/clearCPF";
+import { verifyUserLogged } from "../helpers/verifyUserLogged";
+import { postDeposit, postTransfer } from "../services/requests";
 
 export function Transactions() {
   const [transactionType, setTransactionType] = useState('transferencia');
+  const [transferFailed, setTransferFailed] = useState({ message: '' });
   const [transaction, setTransaction] = useState({
     cpf: '',
     price: '',
   });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const logged = await verifyUserLogged();
+      if (!logged) {
+        navigate('/form');
+      }
+    })();
+  }, [transaction]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,14 +33,12 @@ export function Transactions() {
 
   const transfer = async () => {
     try {
-      const localToken = JSON.parse(localStorage.getItem('token')) || [];
-      const logged = await verifyToken(localToken.token);
-      const { cpf } = logged;
-      await postTransfer(cpf, transaction.cpf, transaction.price);
+      const validUserCPF = await checkUserToken();
+      const clearCPF = removeCPFCaracter(transaction.cpf);
+      await postTransfer(validUserCPF, clearCPF, transaction.price);
       alert('Transferência realizada com sucesso!');
       setTransferFailed({ message: '' });
     } catch (error) {
-      console.log(error);
       setTransferFailed({ message: error.response.data.code });
     }
     setTransaction({
@@ -37,17 +50,14 @@ export function Transactions() {
   const deposit = async () => {
     setTransaction({ cpf: '' });
     try {
-      const localToken = JSON.parse(localStorage.getItem('token')) || [];
-      const logged = await verifyToken(localToken.token);
-      const { cpf } = logged;
-      await postDeposit(cpf, transaction.price);
+      const validUserCPF = await checkUserToken();
+      await postDeposit(validUserCPF, transaction.price);
       alert('Deposito realizado com sucesso!');
+      setTransaction({ price: '' });
       setTransferFailed({ message: '' });
     } catch (error) {
-      console.log(error);
       setTransferFailed({ message: error.response.data.code });
     }
-    setTransaction({ price: '' });
   };
 
   const changeTransaction = (value) => {
@@ -101,6 +111,9 @@ export function Transactions() {
           {transactionType === 'transferencia' ? 'Transferir' : 'Depositar'}
         </button>
       </form>
+      <div className='flex justify-center w-full mb-2'>
+        <p className='text-[#ffff] ml-2'>{transferFailed.message}</p>
+      </div>
     </div>
   );
 }

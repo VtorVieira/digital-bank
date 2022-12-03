@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const { CustomError } = require('../errors/CustomErrors');
 const { User, Account, Transaction } = require('../database/models');
 
 const transactionService = {

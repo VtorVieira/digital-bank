@@ -22,7 +22,7 @@ const userService = {
 
   findByCPF: async (cpf) => {
     const user = await User.findOne({ where: { cpf }, raw: true });
-    if (!user) throw new CustomError(401, 'Nome ou CPF incorreto!');
+    if (!user) throw new CustomError(400, 'Nome ou CPF incorreto!');
     const { id, name } = user;
     const token = generate.generateToken(id, name, cpf);
     return token;
@@ -32,7 +32,7 @@ const userService = {
     const user = await User.findOne({ where: { cpf }, raw: true });
 
     if (user) {
-      throw new CustomError(401, 'Usuário já cadastrado no sistema!');
+      throw new CustomError(400, 'Usuário já cadastrado no sistema!');
     }
 
     const result = await sequelize.transaction(async (t) => {

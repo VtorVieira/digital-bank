@@ -1,15 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Main } from './pages/Main';
-import { SingIn } from './pages/SingIn';
-import { SingUp } from './pages/SingUp';
+import { Form } from './pages/Form';
+
 import './styles/global.css';
 
 function App() {
   return (
     <Routes>
-      <Route exact path='/signin' element={<SingIn />} />
-      <Route exact path="/" element={<Navigate to="/signin" />} />
-      <Route exact path='/signup' element={<SingUp />} />
+      <Route exact path='/form' element={<Form />} />
+      <Route exact path="/" element={<Navigate to="/form" />} />
       <Route exact path='/main' element={<Main />} />
     </Routes>
   );

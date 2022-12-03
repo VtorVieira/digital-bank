@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Transactions } from "../components/Transactions";
+import { History } from "../components/History";
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Transactions } from "../components/Transactions";
 
-import { checkBalance, verifyToken } from "../services/requests";
-import History from "../components/History";
+import { checkBalance } from "../services/requests";
+import { verifyUserLogged } from "../helpers/verifyUserLogged";
+
+import { GrUpdate } from 'react-icons/gr';
 
 export function Main() {
   const [balance, setBalance] = useState(0);
+  const [updatedBalance, setUpdatedBalance] = useState(false);
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const localToken = JSON.parse(localStorage.getItem('token')) || [];
-      const logged = await verifyToken(localToken.token);
+      const logged = await verifyUserLogged();
       const { name } = logged;
       setUser(name);
       if (logged) {
         const balanceUser = await checkBalance(logged);
-        setBalance(balanceUser);
+        setBalance(balanceUser.toString().replace('.', ','));
       } else {
-        navigate('/');
+        navigate('/form');
       }
     })();
-  },);
+  }, [updatedBalance]);
+
+  const handleClick = () => setUpdatedBalance(!updatedBalance);
 
   return (
     <div className='flex flex-col h-screen bg-[#919191] xl:flex xl:items-center 2xl:flex 2xl:items-center md:text-xl'>
@@ -34,7 +39,12 @@ export function Main() {
         <Header />
         <div className='flex gap-2 flex-col border-solid border-2 bg-[#6b6b6b] mt-4 ml-4 mr-4 rounded-md text-[#ffff] font-bold'>
           <h1 className='mt-2 ml-4'>Bem Vindo, {user}</h1>
-          <span className='mb-2 ml-4'>Saldo disponível: R$ {balance}</span>
+          <div className="flex items-center">
+            <span className='mb-2 ml-4 mt-2'>Saldo disponível: R$ {balance}</span>
+            <button type="button" onClick={handleClick}>
+              <GrUpdate className="fill-[#ffff] ml-4" />
+            </button>
+          </div>
         </div>
         <Transactions />
         <History />

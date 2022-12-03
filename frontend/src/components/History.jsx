@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { typeFilter } from '../helpers/typeFilter';
+import { verifyUserLogged } from '../helpers/verifyUserLogged';
 
-import { getHistoryUser, verifyToken } from '../services/requests';
+import { getHistoryUser } from '../services/requests';
 
-function History() {
+export function History() {
   const [search, setSearch] = useState('');
   const [history, setHistory] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -13,13 +14,8 @@ function History() {
 
   useEffect(() => {
     (async () => {
-      const localToken = JSON.parse(localStorage.getItem('token')) || [];
-      const logged = await verifyToken(localToken.token);
-      if (logged) {
-        const { cpf } = logged;
-        const historyUser = await getHistoryUser(cpf);
-        setHistory(historyUser);
-      } else {
+      const logged = await verifyUserLogged();
+      if (!logged) {
         navigate('/');
       }
     })();
@@ -37,7 +33,10 @@ function History() {
     setSearch(value);
   };
 
-  const filterHistory = () => {
+  const filterHistory = async () => {
+    const { cpf } = await verifyUserLogged();
+    const historyUser = await getHistoryUser(cpf);
+    setHistory(historyUser);
     setFilter(search);
     setSearch('');
   };
@@ -47,7 +46,7 @@ function History() {
       <div className='flex justify-center mt-4 text-[#ffff]'>
         <h3>Histórico</h3>
       </div>
-      <div className='flex flex-col justify-center items-center bg-[#6b6b6b] m-4 rounded-md font-bold md:flex-row md:justify-around'>
+      <div className='text-base flex flex-col justify-center items-center bg-[#6b6b6b] m-4 rounded-md font-bold md:flex-row md:justify-around'>
         <input
           className='rounded-md text-gray-500 w-48 h-11 p-3 shadow-lg focus:outline-none focus:ring focus:ring-blue-400 md:w-1/3 xl:w-1/3 2xl:w-1/3'
           type="date"
@@ -60,7 +59,7 @@ function History() {
           <option
             value="selecione"
           >
-            Filtre por tipo
+            Todas
           </option>
           {
             typeFilter.map((item, index) => (
@@ -88,10 +87,10 @@ function History() {
             return filter === 'selecione'
               ? item
               : item.date.includes(filter) || item.type.includes(filter);
-          }).map((transfer) => (
+          }).map((transfer, index) => (
             <tr
               className='flex justify-around border-solid border-2  text-[#ffff]'
-              key={transfer.id}
+              key={index}
             >
               <td className="border-solid border-2 w-full text-center">{transfer.date}</td>
               <td className="border-solid border-2 w-full text-center">{transfer.type}</td>
@@ -105,5 +104,3 @@ function History() {
     </div>
   );
 }
-
-export default History;

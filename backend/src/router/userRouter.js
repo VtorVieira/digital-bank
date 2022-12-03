@@ -8,6 +8,6 @@ const userRouter = Router();
 userRouter.post('/one', userControllers.findOne);
 userRouter.get('/all', userControllers.findAll);
 userRouter.post('/signin', validate.validateLogin, userControllers.findByCPF);
-userRouter.post('/signup', validate.validateLogin, userControllers.createUser);
+userRouter.post('/signup', validate.validateRegister, userControllers.createUser);
 
 module.exports = userRouter;
