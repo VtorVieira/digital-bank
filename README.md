@@ -29,7 +29,7 @@ npm i // para instalar as dependencias
 ```
 npm i // para instalar as dependencias
 ```
-4 - Voltar para a pasta digital-bank e suba o dockercompose. Após rodar o comando, aguarde um pouco que a aplicação irá ficar disponivel nas seguintes rotas:
+4 - Voltar para a pasta `digital-bank` e suba o dockercompose. Após rodar o comando, aguarde um pouco que a aplicação irá ficar disponivel nas seguintes rotas:
 
   `- Front End: http://localhost:3000`
 
