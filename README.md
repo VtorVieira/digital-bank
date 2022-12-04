@@ -45,3 +45,25 @@ npm i // para instalar as dependencias
 </ul>
 
 *esta subindo um usuário teste para facilitar a utilização. CPF: 01234567890
+
+## Preview da Aplicação
+
+<p align="center">
+Tela de Login / Tela de Cadastro / Tela Principal
+</p>
+<p align="center">
+<img src="./samples/login.png" alt="login" width="300"/>
+<img src="./samples/Cadastro.png" alt="cadastro" width="300"/>
+<img src="./samples/Main.png" alt="principal" width="400"/>
+</p>
+<hr />
+
+<p align="center">
+Versão Mobile
+</p>
+<p align="center">
+<img src="./samples/mLogin.png" alt="login" width="300"/>
+<img src="./samples/mCadastro.png" alt="cadastro" width="300"/>
+<img src="./samples/mMain.png" alt="principal" width="300"/>
+</p>
+<hr />
