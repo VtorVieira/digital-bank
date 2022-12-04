@@ -34,3 +34,14 @@ npm i // para instalar as dependencias
   `- Front End: http://localhost:3000`
 
   `- Back End: http://localhost:4001`
+  
+  
+## Regra de Negócio para Transações
+
+<ul>
+  <li>Deposito só é permitido para o proprio usuário, sendo necessário informar apenas o valor, tendo um limite de até R$ 2000</li>
+  <li>Só é permitido transferir entre os usuários da aplicação, sendo assim, caso queira testar, será necessário cadastrar dois usuários*</li>
+  <li>Para apresentar o saldo disponível após uma transação (transferência/deposito), é necessário clicar no icone de atualizar</li>
+</ul>
+
+*esta subindo um usuário teste para facilitar a utilização. CPF: 01234567890
