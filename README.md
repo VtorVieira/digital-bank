@@ -35,7 +35,38 @@ npm i // para instalar as dependencias
 
   `- Back End: http://localhost:4001`
   
-  
+## Rotas Api
+
+#### Login
+```
+http://localhost:4001/signin
+```
+
+#### Cadastro
+```
+http://localhost:4001/signup
+```
+
+#### Consultar Saldo
+```
+http://localhost:4001/account/balance
+```
+
+#### Realizar Transferência
+```
+http://localhost:4001/account/transfer
+```
+
+#### Realizar Deposito
+```
+http://localhost:4001/account/deposit
+```
+
+#### Consulta das transações para montar a tabela
+```
+http://localhost:4001/transactions
+```
+
 ## Regra de Negócio para Transações
 
 <ul>
