@@ -23,13 +23,13 @@ git@github.com:VtorVieira/digital-bank.git
 ```
 2 - Entre na pasta `frontend` e execute o comando abaixo:
 ```
-npm i   // para subir a aplicação
+npm i // para instalar as dependencias
 ```
 3 - Entre na pasta `backend` e execute o comando abaixo:
 ```
-npm i   // para subir a aplicação
+npm i // para instalar as dependencias
 ```
-4 - Entre na pasta digital-bank  e suba o dockercompose. Após rodar o comando, aguarde um pouco que a aplicação irá ficar disponivel nas seguintes rotas:
+4 - Voltar para a pasta digital-bank e suba o dockercompose. Após rodar o comando, aguarde um pouco que a aplicação irá ficar disponivel nas seguintes rotas:
 
   `- Front End: http://localhost:3000`
 
