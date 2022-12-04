@@ -22,3 +22,5 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(API_PORT, () => console.log(`Iniciando na porta ${API_PORT}`));
+
+module.exports = app;

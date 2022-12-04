@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { postLogin, postRegister } from '../services/requests';
 import { removeCPFCaracter } from '../helpers/clearCPF';
 
-
 import { SignInUp } from '../components/SignInUp';
 
 export function Form() {

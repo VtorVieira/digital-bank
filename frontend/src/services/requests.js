@@ -11,6 +11,7 @@ export const verifyToken = async (token) => {
         authorization: token,
       },
     });
+    console.log(retorno.data);
     return retorno.data;
   } catch (error) {
     return false;
@@ -18,6 +19,7 @@ export const verifyToken = async (token) => {
 };
 
 export const postLogin = async (name, cpf) => {
+  console.log('to aqui!');
   const { data } = await api.post('/signin', { name, cpf });
   return data;
 };

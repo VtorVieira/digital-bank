@@ -11,7 +11,7 @@ export function Header() {
           src={dgbank}
           alt="Logo" />
       </div>
-      <Link className="mr-2" to="/form" >
+      <Link name="logout" className="mr-2" to="/form" >
         <FiLogOut className="text-[#FFFF]" />
       </Link>
     </nav>

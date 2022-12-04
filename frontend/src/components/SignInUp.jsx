@@ -1,7 +1,15 @@
 import React from 'react';
 import dgbank from '../images/dgbank.svg';
 
-export function SignInUp({ formType, handleChange, handleSignIn, handleSingUp, changeForm, form, requestFailed }) {
+export function SignInUp(
+  { formType,
+    handleChange,
+    handleSignIn,
+    handleSingUp,
+    changeForm,
+    form,
+    requestFailed,
+  }) {
 
   return (
     <div className='flex justify-center items-center h-screen bg-[#919191] font-bold text-lg'>
