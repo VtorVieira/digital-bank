@@ -53,10 +53,9 @@ export function Transactions() {
       const validUserCPF = await checkUserToken();
       await postDeposit(validUserCPF, transaction.price);
       alert('Deposito realizado com sucesso!');
-      setTransaction({ price: '' });
-      setTransferFailed({ message: '' });
     } catch (error) {
       setTransferFailed({ message: error.response.data.code });
+      setTransaction({ price: '' });
     }
   };
 

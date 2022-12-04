@@ -40,15 +40,16 @@ const accountService = {
     if (balance <= 0) {
       throw new CustomError(400, 'Não é possível realizar transferência com valor igual ou menor que R$ 0');
     }
-
-    if (balance > 2000) {
-      throw new CustomError(400, 'Transferências tem um limite de até R$ 2000');
-    }
     return debitedAccountRec;
   },
 
   sendDepositUser: async (cpf, balance) => {
     const convertBalance = balance.toString().replace(',', '.');
+
+    if (balance > 2000) {
+      throw new CustomError(400, 'Por segurança o valor de deposito não pode ser maior que R$ 2000 reais');
+    }
+
     const creditedUser = await accountService.findUser(cpf);
     const creditedAccountRec = await Account.findOne({ where: { id: creditedUser.accountId }, raw: true });
     const newBalanceCreditedUser = (Number(creditedAccountRec.balance) + Number(convertBalance));
