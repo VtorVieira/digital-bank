@@ -16,7 +16,8 @@
   "license": "ISC",
   "devDependencies": {
     "mocha": "^10.1.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.5.2"
   },
   "dependencies": {
     "chai": "^4.3.7",
@@ -31,7 +32,6 @@
     "nyc": "^15.1.0",
     "pg": "^8.8.0",
     "sequelize": "^6.26.0",
-    "sequelize-cli": "^6.5.2",
     "sinon": "^15.0.0",
     "sinon-chai": "^3.7.0"
   }
