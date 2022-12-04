@@ -19,7 +19,6 @@ export const verifyToken = async (token) => {
 };
 
 export const postLogin = async (name, cpf) => {
-  console.log('to aqui!');
   const { data } = await api.post('/signin', { name, cpf });
   return data;
 };
