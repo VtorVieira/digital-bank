@@ -3,15 +3,15 @@
 
 ## Resumo BackEnd
 
-Aplicação consiste em uma API que simula transação de transferência, onde é possível fazer login com **username** e **password**, cadastrar novos usuários, visualizar o seu saldo, transferir dinheiro para outros usuários e visualizar o extrato das transações, podendo filtrar por data e tipo de operação (Enviada / Recebida).
-A **API** foi desenvolvida em **NodeJS** com **TypeScript**, **Express** e **PostgreSQL**. Possui uma arquitetura **MSC** e ORM **Sequelize**. Também possui autenticação com **JWT** e criptografia com **bcrypt**, e tratamento de erros com **express-async-errors**.
+Aplicação consiste em uma API que simula transação de transferência, onde é possível fazer login com **username** e **password**, cadastrar novos usuários, visualizar o seu saldo, transferir dinheiro para outros usuários, depositar dinheiro para você mesmo e visualizar o extrato das transações, podendo filtrar por data e tipo de operação (Enviada / Recebida / Deposito).
+A **API** foi desenvolvida em **NodeJS**, **Express** e **PostgreSQL**. Possui uma arquitetura **MSC** e ORM **Sequelize**. Também possui autenticação com **JWT** e criptografia com **bcrypt**, e tratamento de erros com **express-async-errors**.
 
 ## Resumo FrontEnd
 
-Possui uma interface que consome a API desenvolvida no BackEnd, onde é possível fazer login com e visualizar o saldo, transferir dinheiro para outros usuários e visualizar de transações, podendo filtrar por data e tipo de operação (enviada/recebida).
-Foi desenvolvido em **ReactJS** com **TypeScript**. A estilização foi feita com CSS, e **Axios** para fazer as requisições à API.
+Possui uma interface que consome a API desenvolvida no BackEnd, onde é possível fazer login com e visualizar o saldo, transferir dinheiro para outros usuários, depositar dinheiro para você mesmo e visualizar de transações, podendo filtrar por data e tipo de operação (enviada/recebida/deposito).
+Foi desenvolvido em **ReactJS**. A estilização foi feita com **Tailwind**, e **Axios** para fazer as requisições à API.
 
-## ⚙️ Como executar
+## Como executar
 
 Você precisa ter instalado as seguintes ferramentas: Git, Docker e Docker Compose
 
