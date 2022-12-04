@@ -13,7 +13,6 @@ Foi desenvolvido em **ReactJS** com **TypeScript**. A estilização foi feita co
 
 ## ⚙️ Como executar
 
-<details>
 Você precisa ter instalado as seguintes ferramentas: Git, Docker e Docker Compose
 
 Será necessário que a porta 3000 e 4001 estejam disponíveis para a aplicação, Postgresql usará a porta 5432.
@@ -35,5 +34,3 @@ npm i   // para subir a aplicação
   `- Front End: http://localhost:3000`
 
   `- Back End: http://localhost:4001`
-```
-</details>
