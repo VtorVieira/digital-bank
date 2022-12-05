@@ -11,6 +11,17 @@ const transactionController = {
 
     let transactions = await transactionService.getTransactionsUser(cpf);
 
+    /*
+      Responsável pela construção da tabela de histórico
+
+      Monta o objeto experado no front, com as colunas date, type, name e price
+      E faz a transformação das informações esperadas, como:
+      Data: Padrão YYYY/MM/DD
+      Tipo de transferência: Deposito / Enviada / Recebida
+      Name: Valida quem esta fazendo a transação para apresentar o nome
+      price: o valor de cada transação
+      
+    */
     transactions = transactions.map((historyTransfer) => {
       const { debitedAccountId, creditedAccountId, debitedAccount, creditedAccount, value } = historyTransfer;
 

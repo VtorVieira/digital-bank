@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const { User, Account, Transaction } = require('../database/models');
 
 const transactionService = {
+  //Recupera as transações vinculadas ao usuário logado
   getTransactionsUser: async (cpf) => {
     const user = await User.findOne({
       where:

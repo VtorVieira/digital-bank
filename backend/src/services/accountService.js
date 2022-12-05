@@ -13,12 +13,14 @@ const accountService = {
     return allUser;
   },
 
+  // Verifica se o cpf da solicitação existe!
   findUser: async (cpf) => {
     const user = await User.findOne({ where: { cpf }, raw: true });
     if (!user) throw new CustomError(404, 'CPF não encontrado!');
     return user;
   },
 
+  // Recupera o saldo do usuário
   getBalanceUser: async (userId) => {
     const user = await User.findByPk(userId);
     const account = await Account.findOne({
@@ -29,6 +31,7 @@ const accountService = {
     return account;
   },
 
+  //Verifica nas transação de transaferência, se o usuário tem saldo, e se o valores.
   checkBalanceUser: async (cpf, balance) => {
     const debitedUser = await User.findOne({ where: { cpf }, raw: true });
     const debitedAccountRec = await Account.findOne({ where: { id: debitedUser.id }, raw: true });
@@ -43,13 +46,16 @@ const accountService = {
     return debitedAccountRec;
   },
 
+  // Realiza deposito para o proprio usuário
   sendDepositUser: async (cpf, balance) => {
     const convertBalance = balance.toString().replace(',', '.');
 
+    //Valida o limite do deposito, não pode ser maior que R$ 2000
     if (balance > 2000) {
       throw new CustomError(400, 'Por segurança o valor de deposito não pode ser maior que R$ 2000 reais');
     }
 
+    //Encontra o usuário solicitante, e pega o saldo, depois atualiza o novo valor
     const creditedUser = await accountService.findUser(cpf);
     const creditedAccountRec = await Account.findOne({ where: { id: creditedUser.accountId }, raw: true });
     const newBalanceCreditedUser = (Number(creditedAccountRec.balance) + Number(convertBalance));
@@ -75,13 +81,25 @@ const accountService = {
     return result;
   },
 
+  /* 
+    Realiza transferência para outro usuário cadastrado na aplicação
+    para isso é informado o cpf do solicitante e do beneficiado,
+    junto com o valor preenchido no front
+  */
   sendTransferUser: async (cpfRequest, cpfReceiver, balance) => {
     const convertBalance = balance.toString().replace(',', '.');
 
+    // Não permite que o usuário consiga transfeir para si mesmo
     if (cpfRequest === cpfReceiver) {
       throw new CustomError(400, 'Você não pode transferir valor para você mesmo!');
     }
 
+    /*
+      1 - Verifica o saldo do solicitante
+      2 - Encontra os usuários origem/destino
+      3 - Recupera a conta para pegar o saldo
+      4 - Atualiza a conta de ambos os usuários
+    */
     const debitedAccountRec = await accountService.checkBalanceUser(cpfRequest, Number(convertBalance));
 
     const debitedUser = await accountService.findUser(cpfRequest);
