@@ -79,8 +79,9 @@ http://localhost:4001/transactions
 ## Regra de Negócio para Transações
 
 <ul>
-  <li>Deposito só é permitido para o proprio usuário, sendo necessário informar apenas o valor, tendo um limite de até R$ 2000</li>
+  <li>Deposito só é permitido para o proprio usuário, sendo necessário informar apenas o valor, tendo um limite de até R$ 2000.</li>
   <li>Só é permitido transferir entre os usuários da aplicação, sendo assim, caso queira testar, será necessário cadastrar dois usuários*</li>
+  <li>Para realizar a primeira transação de transferência, após existir dois usuários, é necessário depositar um valor na conta!</li>
   <li>Para apresentar o saldo disponível após uma transação (transferência/deposito), é necessário clicar no icone de atualizar</li>
 </ul>
 
