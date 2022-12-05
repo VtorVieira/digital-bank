@@ -15,7 +15,7 @@ describe('Testes da tela de Main:', () => {
   });
 
   it('Teste se a página Main tem a mensagem saldo disponível.', () => {
-    const saldo = screen.getByText(/saldo disponível: r\$ 0/i);
-    expect(saldo).toBeInTheDocument();
+    const balance = screen.getByText(/saldo disponível: r\$ 0/i);
+    expect(balance).toBeInTheDocument();
   });
 });

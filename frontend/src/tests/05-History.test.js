@@ -14,13 +14,13 @@ describe('Testes da tela de History:', () => {
   });
 
   it('Teste se a página History tem o botão filtrar.', () => {
-    const filtrar = screen.getByRole('button', { name: /filtrar/i });
-    expect(filtrar).toBeInTheDocument();
+    const filter = screen.getByRole('button', { name: /filtrar/i });
+    expect(filter).toBeInTheDocument();
   });
 
   it('Teste se a página History tem uma tabela.', () => {
-    const tabela = screen.getByRole('rowgroup');
-    expect(tabela).toBeInTheDocument();
+    const table = screen.getByRole('rowgroup');
+    expect(table).toBeInTheDocument();
 
     const columnTableData = screen.getByRole('columnheader', { name: /data/i });
     const columnTableTransacao = screen.getByRole('columnheader', { name: /transação/i });

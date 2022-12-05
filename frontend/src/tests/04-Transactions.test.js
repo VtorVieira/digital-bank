@@ -12,18 +12,18 @@ describe('Testes da tela de Transactions:', () => {
     renderWithRouter(<Transactions />);
   });
   it('Teste se a página Transactions tem o botão transferir e os inputs cpf e valor.', () => {
-    const transferir = screen.getAllByRole('button', { name: /transferir/i });
-    expect(transferir[1]).toBeInTheDocument();
+    const buttonTransfer = screen.getAllByRole('button', { name: /transferir/i });
+    expect(buttonTransfer[1]).toBeInTheDocument();
 
     const inputCPF = screen.getByPlaceholderText(/informe o cpf/i);
-    const inputValor = screen.getByPlaceholderText(/informe o valor/i);
+    const inputBalance = screen.getByPlaceholderText(/informe o valor/i);
     expect(inputCPF).toBeInTheDocument();
-    expect(inputValor).toBeInTheDocument();
+    expect(inputBalance).toBeInTheDocument();
 
     fireEvent.change(inputCPF, { target: { value: CPF } });
-    fireEvent.change(inputValor, { target: { value: VALOR } });
+    fireEvent.change(inputBalance, { target: { value: VALOR } });
     expect(inputCPF.value).toEqual(CPF);
-    expect(inputValor.value).toEqual(VALOR);
+    expect(inputBalance.value).toEqual(VALOR);
   });
 
   it('Teste se a página Transactions tem o botão depositar e aprensenta o input valor.', () => {

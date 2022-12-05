@@ -31,13 +31,13 @@ describe('Testes da tela de Login/Cadastro:', () => {
       expect(inputCPF.value).toEqual(CPF);
     });
     it('Testa se existe o botão  "Entrar":', async () => {
-      const buttonEntrar = screen.getByRole('button', { name: /Entrar/i });
-      expect(buttonEntrar).toBeInTheDocument();
+      const buttonLogin = screen.getByRole('button', { name: /Entrar/i });
+      expect(buttonLogin).toBeInTheDocument();
     });
     it('Testa se existe o botão  "Cadastre-se":', () => {
-      const buttonEsqueceu = screen.getByRole('button', { name: /Ainda não tem conta?/i });
-      expect(buttonEsqueceu).toBeInTheDocument();
-      fireEvent.click(buttonEsqueceu);
+      const buttonAccount = screen.getByRole('button', { name: /Ainda não tem conta?/i });
+      expect(buttonAccount).toBeInTheDocument();
+      fireEvent.click(buttonAccount);
       const title = screen.getByText(/Cadastro/i);
       expect(title).toBeInTheDocument();
     });
@@ -51,17 +51,17 @@ describe('Testes da tela de Login/Cadastro:', () => {
       expect(img.getAttribute('src')).toBe(src);
     });
     it('Teste se a página title Cadastro.', () => {
-      const buttonEsqueceu = screen.getByRole('button', { name: /Ainda não tem conta?/i });
-      expect(buttonEsqueceu).toBeInTheDocument();
-      fireEvent.click(buttonEsqueceu);
+      const buttonAccount = screen.getByRole('button', { name: /Ainda não tem conta?/i });
+      expect(buttonAccount).toBeInTheDocument();
+      fireEvent.click(buttonAccount);
 
       const title = screen.getByText(/Cadastro/i);
       expect(title).toBeInTheDocument();
     });
     it('Testa se existe o input do Nome e CPF e se consegue digitar":', () => {
-      const buttonEsqueceu = screen.getByRole('button', { name: /Ainda não tem conta?/i });
-      expect(buttonEsqueceu).toBeInTheDocument();
-      fireEvent.click(buttonEsqueceu);
+      const buttonAccount = screen.getByRole('button', { name: /Ainda não tem conta?/i });
+      expect(buttonAccount).toBeInTheDocument();
+      fireEvent.click(buttonAccount);
 
       const inputs = screen.getAllByRole('textbox');
       expect(inputs[0]).toBeInTheDocument();
@@ -74,17 +74,17 @@ describe('Testes da tela de Login/Cadastro:', () => {
       expect(inputs[1].value).toEqual(CPF);
     });
     it('Testa se existe o botão  "Cadastrar":', () => {
-      const buttonEsqueceu = screen.getByRole('button', { name: /Ainda não tem conta?/i });
-      expect(buttonEsqueceu).toBeInTheDocument();
-      fireEvent.click(buttonEsqueceu);
+      const buttonAccount = screen.getByRole('button', { name: /Ainda não tem conta?/i });
+      expect(buttonAccount).toBeInTheDocument();
+      fireEvent.click(buttonAccount);
 
-      const buttonEntrar = screen.getByRole('button', { name: /Cadastrar/i });
-      expect(buttonEntrar).toBeInTheDocument();
+      const buttonLogin = screen.getByRole('button', { name: /Cadastrar/i });
+      expect(buttonLogin).toBeInTheDocument();
     });
     it('Testa se existe o botão  "Cadastre-se":', () => {
-      const buttonEsqueceu = screen.getByRole('button', { name: /Ainda não tem conta?/i });
-      expect(buttonEsqueceu).toBeInTheDocument();
-      fireEvent.click(buttonEsqueceu);
+      const buttonAccount = screen.getByRole('button', { name: /Ainda não tem conta?/i });
+      expect(buttonAccount).toBeInTheDocument();
+      fireEvent.click(buttonAccount);
 
       const voltar = screen.getByRole('button', { name: /Volta para login/i });
       expect(voltar).toBeInTheDocument();
