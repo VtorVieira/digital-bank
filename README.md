@@ -3,7 +3,7 @@
 
 ## Resumo BackEnd
 
-Aplicação consiste em uma API que simula transação de transferência, onde é possível fazer login com **username** e **password**, cadastrar novos usuários, visualizar o seu saldo, transferir dinheiro para outros usuários, depositar dinheiro para você mesmo e visualizar o extrato das transações, podendo filtrar por data e tipo de operação (Enviada / Recebida / Deposito).
+Aplicação consiste em uma API que simula transação de transferência e deposito, onde é possível fazer login com **username** e **password**, cadastrar novos usuários, visualizar o seu saldo, transferir dinheiro para outros usuários, depositar dinheiro para você mesmo e visualizar o extrato das transações, podendo filtrar por data e tipo de operação (Enviada / Recebida / Deposito).
 A **API** foi desenvolvida em **NodeJS**, **Express** e **PostgreSQL**. Possui uma arquitetura **MSC** e ORM **Sequelize**. Também possui autenticação com **JWT** e criptografia com **bcrypt**, e tratamento de erros com **express-async-errors**.
 
 ## Resumo FrontEnd
@@ -34,6 +34,15 @@ npm i // para instalar as dependencias
   `- Front End: http://localhost:3000`
 
   `- Back End: http://localhost:4001`
+  
+## Testes
+
+### Aplicado testes unitários na camada do front utilizando **Jest**
+
+Entre na pasta `frontend` e execute o comando abaixo:
+```
+npm run test
+```
   
 ## Rotas Api
 
