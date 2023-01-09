@@ -8,8 +8,8 @@ import { getHistoryUser } from '../services/requests';
 
 export function History() {
   const [search, setSearch] = useState('');
-  const [history, setHistory] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [history, setHistory] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -4,8 +4,8 @@ export function Footer() {
   return (
     <footer className='flex flex-col justify-center items-center border-solid border-2 bg-[#6b6b6b] mt-4 ml-4 mr-4 rounded-md text-[#ffff] font-bold'>
       <h3>Digital Bank</h3>
-      <p>Created by <span>Vitor Vieira</span> &copy; 2022</p>
       <div className='flex'>
+        <p>Created by <span>Vitor Vieira</span> &copy; 2022</p>
         <label htmlFor="linkedIn">
           {' '}
           <abbr title="https://www.linkedin.com/in/vtorvieira/">
@@ -23,7 +23,7 @@ export function Footer() {
           </abbr>
         </label>
       </div>
-      <p>React, Tailwind, NodeJs, Postgres, Sequelize</p>
+      <p>React, Tailwind, NodeJs, Express, Postgres, Sequelize</p>
     </footer>
   );
 }

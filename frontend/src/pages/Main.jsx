@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { History } from "../components/History";
@@ -11,10 +11,13 @@ import { verifyUserLogged } from "../helpers/verifyUserLogged";
 
 import { GrUpdate } from 'react-icons/gr';
 
+import DigitalBankContext from "../context/digitalContext";
+
 export function Main() {
+  const [user, setUser] = useState([]);
   const [balance, setBalance] = useState(0);
   const [updatedBalance, setUpdatedBalance] = useState(false);
-  const [user, setUser] = useState([]);
+  const { updateValue } = useContext(DigitalBankContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export function Main() {
         navigate('/form');
       }
     })();
-  }, [updatedBalance]);
+  }, [updatedBalance, updateValue]);
 
   const handleClick = () => setUpdatedBalance(!updatedBalance);
 

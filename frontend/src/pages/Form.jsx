@@ -6,12 +6,9 @@ import { removeCPFCaracter } from '../helpers/clearCPF';
 import { SignInUp } from '../components/SignInUp';
 
 export function Form() {
-  const [requestFailed, setRequestFailed] = useState({ message: '' });
   const [formType, setFormType] = useState('Sign In');
-  const [form, setForm] = useState({
-    name: '',
-    cpf: '',
-  });
+  const [form, setForm] = useState({ name: '', cpf: '' });
+  const [requestFailed, setRequestFailed] = useState({ message: '' });
   const navigate = useNavigate();
 
   const handleChange = (event) => {

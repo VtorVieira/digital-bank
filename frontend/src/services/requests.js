@@ -11,7 +11,6 @@ export const verifyToken = async (token) => {
         authorization: token,
       },
     });
-    console.log(retorno.data);
     return retorno.data;
   } catch (error) {
     return false;

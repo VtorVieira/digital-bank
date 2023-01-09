@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import DigitalBankContext from "../context/digitalContext";
 import { checkUserToken } from "../helpers/checkUserToken";
 import { removeCPFCaracter } from "../helpers/clearCPF";
 import { verifyUserLogged } from "../helpers/verifyUserLogged";
 import { postDeposit, postTransfer } from "../services/requests";
 
 export function Transactions() {
-  const [transactionType, setTransactionType] = useState('transferencia');
   const [transferFailed, setTransferFailed] = useState({ message: '' });
-  const [transaction, setTransaction] = useState({
-    cpf: '',
-    price: '',
-  });
+  const [transaction, setTransaction] = useState({ cpf: '', price: '' });
+  const [transactionType, setTransactionType] = useState('transferencia');
+  const { updatedValues } = useContext(DigitalBankContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +35,7 @@ export function Transactions() {
       const validUserCPF = await checkUserToken();
       const clearCPF = removeCPFCaracter(transaction.cpf);
       await postTransfer(validUserCPF, clearCPF, transaction.price);
+      updatedValues();
       alert('Transferência realizada com sucesso!');
       setTransferFailed({ message: '' });
     } catch (error) {
@@ -52,6 +52,7 @@ export function Transactions() {
     try {
       const validUserCPF = await checkUserToken();
       await postDeposit(validUserCPF, transaction.price);
+      updatedValues();
       alert('Deposito realizado com sucesso!');
     } catch (error) {
       setTransferFailed({ message: error.response.data.code });
